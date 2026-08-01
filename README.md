@@ -1,135 +1,329 @@
-# Airbnb Revenue & Business Intelligence Dashboard
+# 🏠 Airbnb Revenue & Business Intelligence Dashboard
 
-A portfolio project analyzing Airbnb listing performance across 15 global cities — covering revenue trends, occupancy patterns, host performance, and guest review sentiment. Built as an end-to-end BI case study combining Power BI, Python, and a React-based interactive dashboard.
+![React](https://img.shields.io/badge/Frontend-React%20%2B%20TypeScript-blue)
+![Power BI](https://img.shields.io/badge/BI-Power%20BI-yellow)
+![Python](https://img.shields.io/badge/Data%20Analysis-Python-green)
+![License](https://img.shields.io/badge/License-Apache%202.0-orange)
 
-![License](https://img.shields.io/badge/License-Apache--2.0-blue)
-![React](https://img.shields.io/badge/React-19-61DAFB)
-![Vite](https://img.shields.io/badge/Vite-6-646CFF)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6)
-![Status](https://img.shields.io/badge/Status-Portfolio%20Project-orange)
+## 📌 Project Overview
 
-## Table of Contents
-1. Project Overview
-2. Features
-3. Architecture
-4. Data Model (Star Schema)
-5. Analysis & Modeling Approach
-6. Dataset
-7. Key Insights
-8. Getting Started
-9. Project Structure
-10. What I Learned
-11. License
+Airbnb hosts and property managers often struggle to understand what factors influence revenue growth, occupancy rate, pricing decisions, and guest satisfaction.
 
-## Project Overview
-Short-term rental hosts and property managers often lack visibility into which factors most affect revenue — pricing, seasonality, occupancy, or guest satisfaction. This project simulates that analysis: cleaning and modeling booking data, building a Power BI-style KPI dashboard, and layering in basic forecasting and review-sentiment analysis to practice full-stack data analytics skills.
+This project builds an end-to-end **Business Intelligence and Analytics solution** to analyze Airbnb listing performance using data analytics, visualization, machine learning techniques, and an interactive dashboard.
 
-Note: This uses a synthetic/sample dataset for learning and demonstration purposes — figures are illustrative, not real business results.
+The solution combines:
 
-## Features
-| Module | What It Does |
-|---|---|
-| Executive Dashboard | City-wise revenue, ADR, occupancy, and YoY trend KPIs |
-| Revenue Forecasting | Basic time-series forecast (trend + seasonality) with confidence range |
-| Pricing Simulator | Interactive slider showing hypothetical price vs. occupancy tradeoff |
-| Investment Matrix | ROI comparison across 15 cities based on modeled assumptions |
-| Host Scorecard | Weighted score (revenue, occupancy, reviews, response time, cancellations) |
-| Review Sentiment | Sentiment classification (VADER) with common complaint keyword extraction |
-| Geospatial Map | City-level markers plotting revenue and occupancy density |
-| Data Cleaning Log | Documents missing-value handling and outlier treatment steps |
+* Business KPI reporting
+* Revenue and occupancy analysis
+* Pricing strategy simulation
+* Host performance evaluation
+* Guest review sentiment analysis
+* Revenue forecasting
+* Interactive React-based dashboard
 
-## Architecture
+The goal is to transform raw Airbnb listing and review data into actionable business insights that can help hosts make better pricing and operational decisions.
 
-Raw Data (CSV)
-|
-v
-Data Cleaning (missing values, outlier handling)
-|
-v
-SQL Star Schema (Fact_Bookings + Dim tables)
-|
-v
-Analysis Layer (Python: forecasting + NLP sentiment)
-|
-v
-Dashboard Layer (Power BI DAX measures / React UI)
+---
 
+# 🎯 Business Problem
 
-## Data Model (Star Schema)
-    Dim_Listings          Dim_City
-         |                    |
-         |     Fact_Bookings  |
-         |----------X---------|
-                    |
-          Dim_Host      Dim_Date
+Airbnb hosts need answers to questions like:
 
-Fact table: Fact_Bookings (booking_id, listing_id, host_id, date_id, nightly_rate, revenue, occupancy_flag, review_score, sentiment_score)
+* Which cities generate the highest revenue?
+* How does pricing impact occupancy?
+* What factors improve guest ratings?
+* Which hosts perform better?
+* What are the most common guest complaints?
+* How can future revenue trends be predicted?
 
-### Sample DAX Measures
+This project provides a data-driven approach to answer these questions.
 
-Total Revenue = SUM(Fact_Bookings[revenue])
-ADR = AVERAGE(Fact_Bookings[nightly_rate])
-Occupancy Rate % =
-DIVIDE(
-CALCULATE(COUNTROWS(Fact_Bookings), Fact_Bookings[occupancy_flag] = 1),
-COUNTROWS(Fact_Bookings)
-)
-RevPAR = [ADR] * [Occupancy Rate %]
+---
 
+# 📊 Dataset
 
-## Analysis & Modeling Approach
-- Forecasting: Time-series decomposition (trend + weekly seasonality) using Prophet, with an XGBoost layer to capture residual patterns. Evaluated using MAPE on a held-out test split.
-- Pricing sensitivity: A simple elasticity-based formula estimates how occupancy might shift if price changes:
-  Delta Occupancy = elasticity x (Delta Price / Current Price) x Base Occupancy
-- Review sentiment: VADER sentiment scoring + TF-IDF n-grams to surface frequently mentioned complaint themes (e.g., check-in delays, cleanliness).
+Dataset Source:
 
-## Dataset
-15 cities across 4 regions (e.g., Tokyo, London, Paris, New York, Dubai, Lisbon). Fields include nightly rate, occupancy, review score, host response time, and coordinates for mapping. (Synthetic dataset for practice purposes.)
+Maven Analytics Data Playground – Airbnb Listings & Reviews Dataset
 
-## Key Insights
-- Weekend and holiday periods show clear demand surges — supports dynamic pricing over flat rates.
-- Listings with faster host response time and Superhost status correlate with higher review scores.
-- A small set of recurring complaint themes (check-in process, cleanliness) account for a disproportionate share of negative reviews.
+The dataset contains real-world Airbnb listing and review information including:
 
-## Getting Started
+* Property details
+* Location information
+* Pricing information
+* Availability
+* Host information
+* Guest reviews
+* Ratings
+* Geographic coordinates
 
-Prerequisites: Node.js 18+/20+/22+, npm 9+, Git
+Dataset Link:
+https://mavenanalytics.io/data-playground/airbnb-listings-reviews
 
-git clone https://github.com/<your-username>/<repo-name>.git
-cd <repo-name>
-npm install
-npm run dev
+---
 
+# 🚀 Key Features
 
-Dashboard link : https://6a6e09a9c7d3d1d1c639d37d--fantastic-kangaroo-845a83.netlify.app/
+| Module              | Description                                      |
+| ------------------- | ------------------------------------------------ |
+| Executive Dashboard | Revenue, ADR, occupancy and performance KPIs     |
+| Revenue Analysis    | City-wise revenue comparison and trends          |
+| Forecasting Model   | Time-series based revenue prediction             |
+| Pricing Simulator   | Analyze price vs occupancy relationship          |
+| Host Scorecard      | Evaluate host performance using multiple metrics |
+| Sentiment Analysis  | Identify guest satisfaction and complaints       |
+| Geospatial Analysis | Location-based revenue and occupancy insights    |
+| Investment Matrix   | Compare market opportunities across cities       |
 
-Production build:
+---
 
-npm run build
-npm run preview
+# 🏗️ Project Architecture
 
+```
+Raw Airbnb Data
+        |
+        ↓
+Data Cleaning & Transformation
+(Python Pandas)
+        |
+        ↓
+SQL Star Schema Design
+        |
+        ↓
+Analytics Layer
+(Forecasting + NLP Sentiment)
+        |
+        ↓
+Dashboard Layer
+(Power BI + React + TypeScript)
+```
 
-## Project Structure
+---
 
+# 🗂️ Data Model (Star Schema)
+
+```
+             Dim_City
+                |
+                |
+Dim_Listings --- Fact_Bookings --- Dim_Date
+                |
+                |
+             Dim_Host
+```
+
+### Fact Table
+
+**Fact_Bookings**
+
+Contains:
+
+* Booking information
+* Revenue
+* Nightly price
+* Occupancy status
+* Review score
+* Sentiment score
+
+### Dimension Tables
+
+* Listing Details
+* City Information
+* Host Information
+* Date Dimension
+
+---
+
+# 📈 Business KPIs
+
+The dashboard tracks:
+
+* Total Revenue
+* Average Daily Rate (ADR)
+* Occupancy Rate
+* RevPAR
+* Average Review Score
+* Host Performance Score
+* Cancellation Rate
+* Revenue Growth Trend
+
+---
+
+# 🧮 Data Analysis & Modeling
+
+## Revenue Forecasting
+
+Implemented time-series forecasting to identify future revenue trends using:
+
+* Trend analysis
+* Seasonal patterns
+* Forecast evaluation metrics
+
+---
+
+## Pricing Sensitivity Analysis
+
+Analyzes how pricing changes can impact occupancy:
+
+```
+Occupancy Change =
+Price Elasticity × Price Change × Base Occupancy
+```
+
+---
+
+## Guest Review Sentiment Analysis
+
+Applied NLP techniques:
+
+* VADER sentiment scoring
+* TF-IDF keyword extraction
+
+Identified common complaint categories:
+
+* Check-in experience
+* Cleanliness issues
+* Communication problems
+
+---
+
+# 🔍 Key Insights
+
+### 📌 Pricing Strategy
+
+* Demand increases during weekends and peak seasons.
+* Dynamic pricing can improve revenue compared to fixed pricing.
+
+### 📌 Host Performance
+
+* Faster host response time is associated with better guest ratings.
+* High-performing hosts maintain stronger customer satisfaction.
+
+### 📌 Customer Experience
+
+* Negative reviews are mainly driven by recurring service issues.
+* Improving operational quality can increase ratings and retention.
+
+---
+
+# 🖥️ Live Dashboard
+
+🚀 Deployment:
+
+https://6a6e09a9c7d3d1d1c639d37d--fantastic-kangaroo-845a83.netlify.app/
+
+---
+
+# 🛠️ Tech Stack
+
+## Data Analytics
+
+* Python
+* Pandas
+* NumPy
+* Matplotlib
+* NLP Techniques
+
+## Business Intelligence
+
+* Power BI
+* DAX Measures
+* Data Modeling
+
+## Frontend Dashboard
+
+* React.js
+* TypeScript
+* Vite
+* Tailwind CSS
+
+## Database
+
+* SQL
+* Star Schema Modeling
+
+---
+
+# 📂 Project Structure
+
+```
 airbnb-revenue-bi-dashboard/
+
+│
 ├── src/
-│ ├── components/ # Dashboard UI modules
-│ ├── data/ # Sample dataset + DAX/SQL reference
-│ ├── types/ # TypeScript interfaces
-│ ├── utils/ # Export/formatting helpers
-│ ├── App.tsx
-│ └── main.tsx
+│   ├── components/
+│   ├── data/
+│   ├── utils/
+│   ├── types/
+│   ├── App.tsx
+│   └── main.tsx
+│
+├── dataset/
+├── README.md
 ├── package.json
-└── README.md
+└── LICENSE
+```
 
+---
 
-## What I Learned
-Building this project helped me practice:
-- Structuring a star-schema data model for BI reporting
-- Writing DAX measures for KPI calculation
-- Basic time-series forecasting and evaluating model accuracy
-- Applying NLP sentiment analysis to unstructured review text
-- Translating raw data into an interactive, recruiter-facing dashboard
+# ⚙️ Installation & Setup
 
-## License
-Released under the Apache License 2.0. See LICENSE for details.
+Clone repository:
+
+```bash
+git clone <repository-url>
+```
+
+Navigate into project:
+
+```bash
+cd airbnb-revenue-bi-dashboard
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run development server:
+
+```bash
+npm run dev
+```
+
+Build production version:
+
+```bash
+npm run build
+```
+
+---
+
+# 💡 What I Learned
+
+Through this project, I gained practical experience in:
+
+* Building an end-to-end analytics pipeline
+* Designing BI-friendly data models
+* Creating business dashboards
+* Writing analytical DAX measures
+* Applying NLP on customer reviews
+* Understanding revenue optimization strategies
+* Communicating insights through data visualization
+
+---
+
+# 🔮 Future Improvements
+
+* Real-time Airbnb API integration
+* Advanced ML-based occupancy prediction
+* Automated pricing recommendation engine
+* Customer churn prediction
+* Cloud deployment with real-time database
+
+---
+
+# 📜 License
+
+This project is licensed under the Apache License 2.0.
