@@ -101,7 +101,7 @@ npm install
 npm run dev
 
 
-Open http://localhost:3000 in your browser.
+Dashboard link : https://6a6e09a9c7d3d1d1c639d37d--fantastic-kangaroo-845a83.netlify.app/
 
 Production build:
 
