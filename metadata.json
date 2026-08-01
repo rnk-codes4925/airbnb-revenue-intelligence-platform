@@ -1,0 +1,6 @@
+{
+  "name": "Airbnb Revenue & Business Intelligence Platform",
+  "description": "Executive Airbnb BI & Data Analytics Platform with Prophet/XGBoost revenue forecasting, dynamic pricing engine, NLP review analytics, and investment intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
